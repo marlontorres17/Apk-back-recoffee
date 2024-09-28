@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.sena.libreriaapi.HomeFragment"
+        android:label="Home" />
+    <fragment
+        android:id="@+id/gestionFragment"
+        android:name="com.sena.libreriaapi.GestionFragment"
+        android:label="Gestión" />
+    <fragment
+        android:id="@+id/reportesFragment"
+        android:name="com.sena.libreriaapi.ReportesFragment"
+        android:label="Reportes" />
+
+    <fragment
+        android:id="@+id/crearFincaFragment"
+        android:name="com.sena.libreriaapi.CreateFarmFragment"
+        android:label="Crear Finca" />
+    <fragment
+        android:id="@+id/verFincaFragment"
+        android:name="com.sena.libreriaapi.VerFincaFragment"
+        android:label="Ver Finca" />
+    <fragment
+        android:id="@+id/recoleccionesFragment"
+        android:name="com.sena.libreriaapi.RecoleccionesFragment"
+        android:label="Recolecciones" />
+
+</navigation>

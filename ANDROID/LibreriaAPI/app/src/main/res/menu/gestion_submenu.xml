@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/crearFinca"
+        android:icon="@drawable/add_svgrepo_com"
+    android:title="Crear Finca" />
+    <item
+        android:id="@+id/verFinca"
+        android:icon="@drawable/look"
+    android:title="Ver Finca" />
+    <item
+        android:id="@+id/recolecciones"
+        android:icon="@drawable/coffee"
+    android:title="Recolecciones" />
+</menu>

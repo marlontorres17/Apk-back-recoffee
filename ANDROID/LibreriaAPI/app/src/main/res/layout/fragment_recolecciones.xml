@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@android:color/black">
+
+        <!-- Contenedor del título e ícono -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <!-- Espacio para ícono -->
+            <ImageView
+                android:id="@+id/icono_recoleccion"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Icono de Recolección"
+                android:src="@drawable/ri_plant_line" />
+
+            <!-- Título -->
+            <TextView
+                android:id="@+id/tv_titulo_recoleccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recolección"
+                android:textSize="24sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Precio x Kilo -->
+        <TextView
+            android:id="@+id/precioKilo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="fecha"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_precio_kilo"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ingrese el precio x kilo de la recolección"
+            android:inputType="numberDecimal"
+            android:textColor="@android:color/white" />
+
+        <!-- Spinner para cargar los lotes -->
+        <TextView
+            android:id="@+id/precioKilo2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Precio x kilo"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_precio_kilo2"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ingrese el precio x kilo de la recolección"
+            android:inputType="numberDecimal"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/Lote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lote"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinner_lotes"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_background"
+            android:spinnerMode="dropdown" />
+
+
+        <!-- Botón Guardar Recolección -->
+        <Button
+            android:id="@+id/btn_guardar_recoleccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Recolección"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#22C700"
+            android:layout_marginTop="16dp" />
+
+        <!-- Botón Ver Listado de Recolección -->
+        <Button
+            android:id="@+id/btn_ver_listado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver listado de recolección"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#616161"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</ScrollView>
