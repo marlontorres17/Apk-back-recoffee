@@ -1,0 +1,114 @@
+<div class="container">
+  <div class="header">
+    <h2 class="title">Persons</h2>
+    <button class="btn-new" (click)="openModal()">Add New Person</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Names</th>
+          <th>Last names</th>
+          <th>Email</th>
+          <th>Date of Birth</th>
+          <th>Gender</th>
+          <th>City</th>
+          <th>Document</th>
+          <th>State</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of persons">
+          <td>{{ person.firstName }} {{ person.secondName }}</td>
+          <td>{{ person.firstLastName }} {{ person.secondLastName }}</td>
+          <td>{{ person.email }}</td>
+          <td>{{ person.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ person.gender }}</td>
+          <td>{{ getCityName(person.cityId) }}</td>
+          <td>{{ person.typeDocument }} - {{ person.numberDocument }}</td>
+          <td>{{ person.state ? 'Active' : 'Inactive' }}</td>
+          <td>
+            <button class="btn-icon edit" (click)="editPerson(person)"><i class="fas fa-edit"></i></button>
+            <button class="btn-icon delete" (click)="deletePerson(person.id, 'physical')"><i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+        <tr *ngIf="persons.length === 0">
+          <td colspan="9" class="no-results">No persons found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <ng-template #personModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="modal-basic-title">Person Form</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #personForm="ngForm" (ngSubmit)="onSubmit(personForm)">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" [(ngModel)]="person.firstName" name="firstName" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="secondName">Second Name</label>
+          <input type="text" id="secondName" [(ngModel)]="person.secondName" name="secondName" class="input-field">
+        </div>
+        <div class="form-group">
+          <label for="firstLastName">First Last Name</label>
+          <input type="text" id="firstLastName" [(ngModel)]="person.firstLastName" name="firstLastName" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="secondLastName">Second Last Name</label>
+          <input type="text" id="secondLastName" [(ngModel)]="person.secondLastName" name="secondLastName" class="input-field">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" [(ngModel)]="person.email" name="email" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth</label>
+          <input type="date" id="dateOfBirth" [(ngModel)]="person.dateOfBirth" name="dateOfBirth" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <input type="text" id="gender" [(ngModel)]="person.gender" name="gender" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" [(ngModel)]="selectedCity" (input)="filterCities()" class="input-field" (focus)="filteredCities = cities" (click)="filteredCities = cities">
+          <div class="dropdown-menu" *ngIf="filteredCities.length > 0">
+            <div *ngFor="let city of filteredCities" (click)="selectCity(city)" class="dropdown-item">{{ city.name }}</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="typeDocument">Document Type</label>
+          <select id="typeDocument" [(ngModel)]="person.typeDocument" name="typeDocument" class="input-field">
+            <option value="CC">CC</option>
+            <option value="TI">TI</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="numberDocument">Document Number</label>
+          <input type="text" id="numberDocument" [(ngModel)]="person.numberDocument" name="numberDocument" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="state">State</label>
+          <select id="state" [(ngModel)]="person.state" name="state" class="input-field">
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,81 @@
+<div class="header">
+    <h2 class="title">Benefits</h2>
+    <button class="btn-new" (click)="openModal()">Add New Benefit</button>
+  </div>
+  
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Cost</th>
+          <th>Farm</th>
+          <th>State</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let benefit of benefits">
+          <td>{{ benefit.name }}</td>
+          <td>{{ benefit.description }}</td>
+          <td>{{ benefit.cost }}</td>
+          <td>{{ getFarmName(benefit.farmId) }}</td>
+          <td><input type="checkbox" [checked]="benefit.state" disabled /></td>
+          <td>
+            <button class="btn-icon edit" (click)="editBenefit(benefit)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon delete" (click)="deleteBenefit(benefit.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="benefits.length === 0">
+          <td colspan="6" class="no-results">No benefits found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Modal -->
+  <ng-template #benefitModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Benefit Form</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+        <span>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #benefitForm="ngForm" (ngSubmit)="onSubmit(benefitForm)" class="benefit-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" [(ngModel)]="benefit.name" name="name" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" [(ngModel)]="benefit.description" name="description" class="input-field" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="cost">Cost</label>
+          <input type="text" id="cost" [(ngModel)]="benefit.cost" name="cost" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="farmId">Select Farm</label>
+          <select id="farmId" [(ngModel)]="benefit.farmId" name="farmId" class="select-field" required>
+            <option value="" disabled selected>Select a farm</option>
+            <option *ngFor="let farm of farms" [value]="farm.id">{{ farm.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="state">Active</label>
+          <input type="checkbox" id="state" [(ngModel)]="benefit.state" name="state" class="checkbox-field">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">{{ benefit.id === 0 ? 'Create' : 'Update' }}</button>
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  

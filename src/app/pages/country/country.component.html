@@ -1,0 +1,71 @@
+<div class="header">
+  <h2 class="title">Countries</h2>
+  <button class="btn-new" (click)="openModal()">Add New Country</button>
+</div>
+
+<div class="table-wrapper">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Description</th>
+        <th>State</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let country of countries">
+        <td>{{ country.name }}</td>
+        <td>{{ country.code }}</td>
+        <td>{{ country.description }}</td>
+        <td><input type="checkbox" [checked]="country.state" disabled /></td>
+        <td>
+          <button class="btn-icon edit" (click)="editCountry(country)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn-icon delete" (click)="deleteCountry(country.id)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="countries.length === 0">
+        <td colspan="5" class="no-results">No countries found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<ng-template #countryModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Country Form</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+      <span>&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #countryForm="ngForm" (ngSubmit)="onSubmit(countryForm)" class="country-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" [(ngModel)]="country.name" name="name" class="input-field" required>
+      </div>
+      <div class="form-group">
+        <label for="code">Code</label>
+        <input type="text" id="code" [(ngModel)]="country.code" name="code" class="input-field" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" [(ngModel)]="country.description" name="description" class="input-field" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="state">Active</label>
+        <input type="checkbox" id="state" [(ngModel)]="country.state" name="state" class="checkbox-field">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">{{ country.id === 0 ? 'Create' : 'Update' }}</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel')">Cancel</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

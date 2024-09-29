@@ -1,0 +1,100 @@
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.btn-new {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 12px;
+  border: 1px solid #dee2e6;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f8f9fa;
+}
+
+.no-results {
+  text-align: center;
+  color: #6c757d;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.edit {
+  color: #007bff;
+}
+
+.delete {
+  color: #dc3545;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.checkbox-field {
+  margin-left: 10px;
+}
+
+.autocomplete-list {
+  border: 1px solid #ced4da;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 1000;
+  background-color: white;
+  width: calc(100% - 16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.autocomplete-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.autocomplete-list li:hover {
+  background-color: #007bff;
+  color: white;
+}

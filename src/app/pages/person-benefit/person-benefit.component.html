@@ -1,0 +1,85 @@
+<div class="header">
+  <h2 class="title">Person Benefits</h2>
+  <button class="btn-new" (click)="openModal()">Add New Person Benefit</button>
+</div>
+
+<div class="table-wrapper">
+  <table class="table">
+      <thead>
+          <tr>
+              <th>Date</th>
+              <th>Price</th>
+              <th>Amount</th>
+              <th>Person</th>
+              <th>Benefit</th>
+              <th>State</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let personBenefit of personBenefits">
+              <td>{{ personBenefit.date | date }}</td>
+              <td>{{ personBenefit.price }}</td>
+              <td>{{ personBenefit.amount }}</td>
+              <td>{{ getPersonName(personBenefit.personId) }}</td>
+              <td>{{ getBenefitName(personBenefit.benefitId) }}</td>
+              <td><input type="checkbox" [checked]="personBenefit.state" disabled /></td>
+              <td>
+                  <button class="btn-icon edit" (click)="editPersonBenefit(personBenefit)">
+                      <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn-icon delete" (click)="deletePersonBenefit(personBenefit.id)">
+                      <i class="fas fa-trash-alt"></i>
+                  </button>
+              </td>
+          </tr>
+          <tr *ngIf="personBenefits.length === 0">
+              <td colspan="7" class="no-results">No person benefits found</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<ng-template #personBenefitModal let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title">Person Benefit Form</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+          <span>&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+      <form #personBenefitForm="ngForm" (ngSubmit)="onSubmit(personBenefitForm)" class="person-benefit-form">
+          <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" id="date" [(ngModel)]="personBenefit.date" name="date" class="input-field" required>
+          </div>
+          <div class="form-group">
+              <label for="amount">Amount</label>
+              <input type="number" id="amount" [(ngModel)]="personBenefit.amount" name="amount" class="input-field" required (change)="updatePrice()">
+          </div>
+          <div class="form-group">
+              <label for="personId">Select Person</label>
+              <select id="personId" [(ngModel)]="personBenefit.personId" name="personId" class="select-field" required>
+                  <option value="" disabled selected>Select a person</option>
+                  <option *ngFor="let person of persons" [value]="person.id">{{ getPersonName(person.id) }}</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="benefitId">Select Benefit</label>
+              <select id="benefitId" [(ngModel)]="personBenefit.benefitId" name="benefitId" class="select-field" required (change)="updatePrice()">
+                  <option value="" disabled selected>Select a benefit</option>
+                  <option *ngFor="let benefit of benefits" [value]="benefit.id">{{ benefit.name }}</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="state">State</label>
+              <input type="checkbox" [(ngModel)]="personBenefit.state" name="state" id="state">
+          </div>
+          <div class="modal-footer">
+              <button type="submit" class="btn-submit">Save</button>
+              <button type="button" class="btn-cancel" (click)="modal.dismiss()">Cancel</button>
+          </div>
+      </form>
+  </div>
+</ng-template>

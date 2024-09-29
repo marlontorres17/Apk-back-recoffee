@@ -1,0 +1,76 @@
+<div class="header">
+    <h2 class="title">Harvests</h2>
+    <button class="btn-new" (click)="openModal()">Add New Harvest</button>
+  </div>
+  
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Kilo Price</th>
+          <th>Lot</th>
+          <th>State</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let harvest of harvests">
+          <td>{{ harvest.date | date }}</td>
+          <td>{{ harvest.kiloPrice }}</td>
+          <td>{{ getLotName(harvest.lotId) }}</td>
+          <td><input type="checkbox" [checked]="harvest.state" disabled /></td>
+          <td>
+            <button class="btn-icon edit" (click)="editHarvest(harvest)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon delete" (click)="deleteHarvest(harvest.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="harvests.length === 0">
+          <td colspan="6" class="no-results">No harvests found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Modal -->
+  <ng-template #harvestModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Harvest Form</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+        <span>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #harvestForm="ngForm" (ngSubmit)="onSubmit(harvestForm)" class="harvest-form">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" id="date" [(ngModel)]="harvest.date" name="date" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="kiloPrice">Kilo Price</label>
+          <input type="number" id="kiloPrice" [(ngModel)]="harvest.kiloPrice" name="kiloPrice" class="input-field" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="lotId">Select Lot</label>
+          <select id="lotId" [(ngModel)]="harvest.lotId" name="lotId" class="select-field" required>
+            <option value="" disabled selected>Select a lot</option>
+            <option *ngFor="let lot of lots" [value]="lot.id">{{ lot.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="state">State</label>
+          <input type="checkbox" [(ngModel)]="harvest.state" name="state" id="state">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn-submit">Save</button>
+          <button type="button" class="btn-cancel" (click)="modal.dismiss()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  

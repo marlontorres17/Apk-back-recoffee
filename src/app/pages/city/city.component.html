@@ -1,0 +1,80 @@
+<div class="header">
+  <h2 class="title">Cities</h2>
+  <button class="btn-new" (click)="openModal()">Add New City</button>
+</div>
+
+<div class="table-wrapper">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Coordinate</th>
+        <th>Department</th>
+        <th>State</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let city of cities">
+        <td>{{ city.name }}</td>
+        <td>{{ city.description }}</td>
+        <td>{{ city.coordinate }}</td>
+        <td>{{ getDepartmentName(city.departmentId) }}</td>
+        <td><input type="checkbox" [checked]="city.state" disabled /></td>
+        <td>
+          <button class="btn-icon edit" (click)="editCity(city)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn-icon delete" (click)="deleteCity(city.id)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="cities.length === 0">
+        <td colspan="6" class="no-results">No cities found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<ng-template #cityModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">City Form</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+      <span>&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #cityForm="ngForm" (ngSubmit)="onSubmit(cityForm)" class="city-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" [(ngModel)]="city.name" name="name" class="input-field" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" [(ngModel)]="city.description" name="description" class="input-field" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="coordinate">Coordinate</label>
+        <input type="text" id="coordinate" [(ngModel)]="city.coordinate" name="coordinate" class="input-field" required>
+      </div>
+      <div class="form-group">
+        <label for="departmentId">Select Department</label>
+        <select id="departmentId" [(ngModel)]="city.departmentId" name="departmentId" class="select-field" required>
+          <option value="" disabled selected>Select a department</option>
+          <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="state">Active</label>
+        <input type="checkbox" id="state" [(ngModel)]="city.state" name="state" class="checkbox-field">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">{{ city.id === 0 ? 'Create' : 'Update' }}</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel')">Cancel</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

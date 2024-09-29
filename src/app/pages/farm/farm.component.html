@@ -1,0 +1,89 @@
+<div class="header">
+    <h2 class="title">Farms</h2>
+    <button class="btn-new" (click)="openModal()">Add New Farm</button>
+  </div>
+  
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Size (m²)</th>
+          <th>Coordinate</th>
+          <th>Code</th>
+          <th>Person</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let farm of farms">
+          <td>{{ farm.name }}</td>
+          <td>{{ farm.description }}</td>
+          <td>{{ farm.sizeMeter }}</td>
+          <td>{{ farm.coordinate }}</td>
+          <th>{{ farm.codeUnique }}</th>
+          <td>{{ getPersonName(farm.personId) }}</td>
+          <td>{{ getCityName(farm.cityId) }}</td>
+          <td><input type="checkbox" [checked]="farm.state" disabled /></td>
+          <td>
+            <button class="btn-icon edit" (click)="editFarm(farm)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon delete" (click)="deleteFarm(farm.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="farms.length === 0">
+          <td colspan="8" class="no-results">No farms found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Modal -->
+  <ng-template #farmModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Farm Form</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+        <span>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #farmForm="ngForm" (ngSubmit)="onSubmit(farmForm)" class="farm-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" [(ngModel)]="farm.name" name="name" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" [(ngModel)]="farm.description" name="description" class="input-field" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="sizeMeter">Size (m²)</label>
+          <input type="number" id="sizeMeter" [(ngModel)]="farm.sizeMeter" name="sizeMeter" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="coordinate">Coordinate</label>
+          <input type="text" id="coordinate" [(ngModel)]="farm.coordinate" name="coordinate" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="personId">Person</label>
+          <select id="personId" [(ngModel)]="farm.personId" name="personId" class="select-field" required>
+            <option *ngFor="let person of persons" [value]="person.id">{{ person.firstName }} {{ person.firstLastName }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cityId">City</label>
+          <select id="cityId" [(ngModel)]="farm.cityId" name="cityId" class="select-field" required>
+            <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">{{ farm.id === 0 ? 'Add' : 'Update' }} Farm</button>
+      </form>
+    </div>
+  </ng-template>
+  

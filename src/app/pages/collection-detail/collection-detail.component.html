@@ -1,0 +1,80 @@
+<div class="header">
+    <h2 class="title">Collection Details</h2>
+    <button class="btn-new" (click)="openModal()">Add New Collection Detail</button>
+  </div>
+  
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Kilo</th>
+          <th>Stage</th>
+          <th>Person</th>
+          <th>Harvest</th>
+          <th>State</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let collectionDetail of collectionDetails">
+          <td>{{ collectionDetail.kilo }}</td>
+          <td>{{ getHarvestStage(collectionDetail.harvestId) }}</td>
+          <td>{{ getPersonName(collectionDetail.personId) }}</td>
+          <td><input type="checkbox" [checked]="collectionDetail.state" disabled /></td>
+          <td>
+            <button class="btn-icon edit" (click)="editCollectionDetail(collectionDetail)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon delete" (click)="deleteCollectionDetail(collectionDetail.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="collectionDetails.length === 0">
+          <td colspan="7" class="no-results">No collection details found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Modal -->
+  <ng-template #collectionDetailModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Collection Detail Form</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+        <span>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #collectionDetailForm="ngForm" (ngSubmit)="onSubmit(collectionDetailForm)" class="collection-detail-form">
+        <div class="form-group">
+          <label for="kilo">Kilo</label>
+          <input type="text" id="kilo" [(ngModel)]="collectionDetail.kilo" name="kilo" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label for="stage">Stage</label>
+          <input type="text" id="stage" [(ngModel)]="collectionDetail.stage" name="stage" class="input-field" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="personId">Select Person</label>
+          <select id="personId" [(ngModel)]="collectionDetail.personId" name="personId" class="select-field" required>
+            <option value="" disabled selected>Select a person</option>
+            <option *ngFor="let person of persons" [value]="person.id">{{ person.firstName }} {{ person.firstLastName }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="harvestId">Select Harvest</label>
+          <select id="harvestId" [(ngModel)]="collectionDetail.harvestId" name="harvestId" class="select-field" required>
+            <option value="" disabled selected>Select a harvest</option>
+            <option *ngFor="let harvest of harvests" [value]="harvest.id">{{ harvest.date }}</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" (click)="modal.dismiss()">Cancel</button>
+          <button type="submit" class="btn-submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  
